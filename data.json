@@ -1,0 +1,198 @@
+{
+  "products": [
+    {
+      "id": "stop-act-natural",
+      "title": "Stop Act Natural",
+      "description": "A whimsical piece capturing the essence of natural beauty with a touch of surrealism.",
+      "price": 150,
+      "image": "img/Stop Act Natural.jpeg",
+      "category": "surreal",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20"]
+    },
+    {
+      "id": "club-mc-meowlys",
+      "title": "Club Mc Meowlys",
+      "description": "A vibrant nightlife scene with feline characters in a cozy lounge setting.",
+      "price": 200,
+      "image": "img/Club Mc Meowlys.jpeg",
+      "category": "nightlife",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20", "20x24"]
+    },
+    {
+      "id": "dream-junction",
+      "title": "Dream Junction",
+      "description": "A mystical crossroads where dreams and reality converge in harmonious chaos.",
+      "price": 175,
+      "image": "img/Dream Junction.jpeg",
+      "category": "surreal",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20"]
+    },
+    {
+      "id": "reflections-of-another-time",
+      "title": "Reflections Of Another Time",
+      "description": "Nostalgic imagery that transports viewers to memories of days gone by.",
+      "price": 160,
+      "image": "img/Reflections Of Another Time.jpeg",
+      "category": "nostalgic",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20"]
+    },
+    {
+      "id": "oh-dorethy",
+      "title": "Oh Dorethy",
+      "description": "A charming character study with whimsical elements and warm colors.",
+      "price": 140,
+      "image": "img/Oh Dorethy.jpeg",
+      "category": "character",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20"]
+    },
+    {
+      "id": "infinite-possibilities",
+      "title": "Infinite Possibilities",
+      "description": "An exploration of endless potential and boundless creativity.",
+      "price": 180,
+      "image": "img/Infinite Possibilities.jpeg",
+      "category": "abstract",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20", "20x24"]
+    },
+    {
+      "id": "time-for-everything",
+      "title": "Time For Everything",
+      "description": "A contemplative piece about the passage of time and life's rhythms.",
+      "price": 165,
+      "image": "img/Time For Everything.jpeg",
+      "category": "contemplative",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20"]
+    },
+    {
+      "id": "past-the-fairy-tree",
+      "title": "Past The Fairy Tree",
+      "description": "A magical journey through enchanted woods and mystical realms.",
+      "price": 155,
+      "image": "img/Past The Fairy Tree.jpeg",
+      "category": "fantasy",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20"]
+    },
+    {
+      "id": "sunrise",
+      "title": "Sunrise",
+      "description": "A breathtaking dawn scene capturing the first light of day.",
+      "price": 145,
+      "image": "img/Sunrise.jpeg",
+      "category": "landscape",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20"]
+    },
+    {
+      "id": "garden-of-kevinity",
+      "title": "Garden of Kevinity",
+      "description": "A lush, vibrant garden scene filled with life and color.",
+      "price": 170,
+      "image": "img/Garden of Kevinity.jpeg",
+      "category": "nature",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20", "20x24"]
+    },
+    {
+      "id": "mc-meowlys-lounge-bar",
+      "title": "Mc Meowly's Lounge & Bar",
+      "description": "A cozy establishment where feline friends gather for evening entertainment.",
+      "price": 190,
+      "image": "img/Mc Meowly's Lounge & Bar.jpeg",
+      "category": "nightlife",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20", "20x24"]
+    },
+    {
+      "id": "big-rock-candy-mountain",
+      "title": "Big Rock Candy Mountain",
+      "description": "A sweet and whimsical landscape inspired by classic folk tales.",
+      "price": 160,
+      "image": "img/Big Rock Candy Mountain.jpeg",
+      "category": "fantasy",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20"]
+    },
+    {
+      "id": "the-beginning-of-the-end",
+      "title": "The Beginning of the End",
+      "description": "A dramatic piece exploring themes of transformation and new beginnings.",
+      "price": 175,
+      "image": "img/The Beginning of the End.jpeg",
+      "category": "dramatic",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20"]
+    },
+    {
+      "id": "pearse-station",
+      "title": "Pearse Station",
+      "description": "A nostalgic urban scene capturing the essence of city life and travel.",
+      "price": 150,
+      "image": "img/Pearse Station.jpeg",
+      "category": "urban",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20"]
+    },
+    {
+      "id": "a-place-to-escape-to",
+      "title": "A Place To Escape To",
+      "description": "A serene sanctuary offering refuge from the chaos of everyday life.",
+      "price": 165,
+      "image": "img/A Place To Escape To.jpeg",
+      "category": "serene",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20"]
+    },
+    {
+      "id": "away-with-the-faries",
+      "title": "Away with the Faries",
+      "description": "A whimsical journey into a world of magic and enchantment.",
+      "price": 155,
+      "image": "img/Away with the Faries.jpeg",
+      "category": "fantasy",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20"]
+    },
+    {
+      "id": "the-entity",
+      "title": "The Entity",
+      "description": "A mysterious and captivating presence that draws viewers into its depths.",
+      "price": 180,
+      "image": "img/The Entity.jpeg",
+      "category": "mysterious",
+      "available": true,
+      "sizes": ["8x10", "11x14", "16x20", "20x24"]
+    }
+  ],
+  "categories": [
+    "all",
+    "surreal",
+    "nightlife",
+    "nostalgic",
+    "character",
+    "abstract",
+    "contemplative",
+    "fantasy",
+    "landscape",
+    "nature",
+    "dramatic",
+    "urban",
+    "serene",
+    "mysterious"
+  ],
+  "siteInfo": {
+    "title": "Shauna McNally Art Gallery",
+    "description": "Original artwork and prints by Shauna McNally",
+    "contact": {
+      "email": "shauna@shaunamcnally.com",
+      "instagram": "@shaunamcnally"
+    }
+  }
+}

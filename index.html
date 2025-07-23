@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shauna McNally Art Gallery</title>
+    <meta name="description" content="Original artwork and prints by Shauna McNally">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Shauna McNally</h1>
+            <p class="tagline">Original Artwork & Prints</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <div class="category-filters">
+                <button class="filter-btn active" data-category="all">All Artwork</button>
+                <button class="filter-btn" data-category="surreal">Surreal</button>
+                <button class="filter-btn" data-category="fantasy">Fantasy</button>
+                <button class="filter-btn" data-category="nightlife">Nightlife</button>
+                <button class="filter-btn" data-category="nature">Nature</button>
+                <button class="filter-btn" data-category="abstract">Abstract</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <div class="gallery" id="gallery">
+                <!-- Gallery items will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for product details -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <div class="product-image">
+                    <img id="modalImage" src="" alt="">
+                </div>
+                <div class="product-details">
+                    <h2 id="modalTitle"></h2>
+                    <p id="modalDescription"></p>
+                    <div class="price-info">
+                        <span class="price" id="modalPrice"></span>
+                    </div>
+                    <div class="size-selector">
+                        <label for="sizeSelect">Size:</label>
+                        <select id="sizeSelect">
+                            <!-- Sizes will be populated -->
+                        </select>
+                    </div>
+                    <button class="buy-btn" id="buyButton">Purchase Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Email: <a href="mailto:shauna@shaunamcnally.com">shauna@shaunamcnally.com</a></p>
+                    <p>Instagram: <a href="https://instagram.com/shaunamcnally" target="_blank">@shaunamcnally</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>About</h3>
+                    <p>Original artwork and high-quality prints by Shauna McNally. Each piece is carefully crafted and printed on archival paper.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Shauna McNally. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
