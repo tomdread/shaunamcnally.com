@@ -3,85 +3,574 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shauna McNally Art Gallery</title>
-    <meta name="description" content="Original artwork and prints by Shauna McNally">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://js.stripe.com/v3/"></script>
+    <title>Instagram Clone - Shauna McNally Art</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fafafa;
+            color: #262626;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid #dbdbdb;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 60px;
+        }
+
+        .header-content {
+            max-width: 975px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #262626;
+            text-decoration: none;
+        }
+
+        .search-bar {
+            background: #efefef;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            width: 268px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-bar::placeholder {
+            color: #8e8e8e;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            color: #262626;
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 975px;
+            margin: 80px auto 0;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 293px;
+            gap: 30px;
+        }
+
+        /* Stories */
+        .stories {
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+        }
+
+        .story {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 66px;
+        }
+
+        .story-avatar {
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            padding: 2px;
+            margin-bottom: 8px;
+        }
+
+        .story-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .story-name {
+            font-size: 12px;
+            color: #262626;
+            text-align: center;
+        }
+
+        /* Post */
+        .post {
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .post-header {
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .post-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .post-user {
+            font-weight: 600;
+            font-size: 14px;
+            color: #262626;
+        }
+
+        .post-more {
+            margin-left: auto;
+            font-size: 16px;
+            color: #262626;
+        }
+
+        .post-image {
+            width: 100%;
+            max-height: 600px;
+            object-fit: cover;
+        }
+
+        .post-actions {
+            padding: 8px 16px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .action-icon {
+            font-size: 24px;
+            color: #262626;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .action-icon:hover {
+            color: #8e8e8e;
+        }
+
+        .action-icon.liked {
+            color: #ed4956;
+        }
+
+        .post-likes {
+            padding: 0 16px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .post-caption {
+            padding: 0 16px;
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .post-caption .username {
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .post-comments {
+            padding: 0 16px;
+            font-size: 14px;
+            color: #8e8e8e;
+            margin-bottom: 8px;
+        }
+
+        .post-time {
+            padding: 0 16px 16px;
+            font-size: 10px;
+            color: #8e8e8e;
+            text-transform: uppercase;
+        }
+
+        .add-comment {
+            padding: 16px;
+            border-top: 1px solid #efefef;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .comment-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            background: transparent;
+        }
+
+        .comment-input::placeholder {
+            color: #8e8e8e;
+        }
+
+        .post-button {
+            background: none;
+            border: none;
+            color: #0095f6;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 80px;
+        }
+
+        .profile-card {
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .profile-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-details h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .profile-details p {
+            font-size: 14px;
+            color: #8e8e8e;
+        }
+
+        .switch-button {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: #0095f6;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .suggestions {
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .suggestions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .suggestions-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #8e8e8e;
+        }
+
+        .see-all {
+            background: none;
+            border: none;
+            color: #262626;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .suggestion-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .suggestion-info {
+            flex: 1;
+        }
+
+        .suggestion-username {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .suggestion-followers {
+            font-size: 12px;
+            color: #8e8e8e;
+        }
+
+        .follow-button {
+            background: none;
+            border: none;
+            color: #0095f6;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                padding: 0 10px;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .search-bar {
+                display: none;
+            }
+
+            .header-content {
+                padding: 0 10px;
+            }
+        }
+
+        /* Animations */
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .heart-beat {
+            animation: heartBeat 0.3s ease-in-out;
+        }
+    </style>
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
-        <div class="container">
-            <h1 class="logo">Shauna McNally</h1>
-            <p class="tagline">Original Artwork & Prints</p>
+        <div class="header-content">
+            <a href="#" class="logo">Instagram</a>
+            <input type="text" class="search-bar" placeholder="Search">
+            <div class="nav-icons">
+                <a href="#" class="nav-icon"><i class="fas fa-home"></i></a>
+                <a href="#" class="nav-icon"><i class="fas fa-paper-plane"></i></a>
+                <a href="#" class="nav-icon"><i class="fas fa-plus-square"></i></a>
+                <a href="#" class="nav-icon"><i class="fas fa-compass"></i></a>
+                <a href="#" class="nav-icon"><i class="fas fa-heart"></i></a>
+                <a href="#" class="nav-icon"><i class="fas fa-user"></i></a>
+            </div>
         </div>
     </header>
 
-    <nav class="nav">
-        <div class="container">
-            <div class="category-filters">
-                <button class="filter-btn active" data-category="all">All Artwork</button>
-                <button class="filter-btn" data-category="surreal">Surreal</button>
-                <button class="filter-btn" data-category="fantasy">Fantasy</button>
-                <button class="filter-btn" data-category="nightlife">Nightlife</button>
-                <button class="filter-btn" data-category="nature">Nature</button>
-                <button class="filter-btn" data-category="abstract">Abstract</button>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="feed">
+            <!-- Stories -->
+            <div class="stories">
+                <div class="story">
+                    <div class="story-avatar">
+                        <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="Your Story">
+                    </div>
+                    <span class="story-name">Your Story</span>
+                </div>
+                <div class="story">
+                    <div class="story-avatar">
+                        <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="shauna_art">
+                    </div>
+                    <span class="story-name">shauna_art</span>
+                </div>
             </div>
-        </div>
-    </nav>
 
-    <main class="main">
-        <div class="container">
-            <div class="gallery" id="gallery">
-                <!-- Gallery items will be loaded here -->
-            </div>
+            <!-- Post -->
+            <article class="post">
+                <div class="post-header">
+                    <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="shauna_art" class="post-avatar">
+                    <span class="post-user">shauna_art</span>
+                    <i class="fas fa-ellipsis-h post-more"></i>
+                </div>
+                
+                <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="Big Rock Candy Mountain" class="post-image">
+                
+                <div class="post-actions">
+                    <i class="far fa-heart action-icon" id="like-btn"></i>
+                    <i class="far fa-comment action-icon"></i>
+                    <i class="far fa-paper-plane action-icon"></i>
+                    <i class="far fa-bookmark action-icon" style="margin-left: auto;"></i>
+                </div>
+                
+                <div class="post-likes" id="likes-count">1,234 likes</div>
+                
+                <div class="post-caption">
+                    <span class="username">shauna_art</span>
+                    A sweet and whimsical landscape inspired by classic folk tales. This enchanting piece captures the magic of childhood dreams and the allure of distant, fantastical places. 🍭✨ #BigRockCandyMountain #FantasyArt #Whimsical #ArtPrint
+                </div>
+                
+                <div class="post-comments">
+                    View all 42 comments
+                </div>
+                
+                <div class="post-time">2 hours ago</div>
+                
+                <div class="add-comment">
+                    <input type="text" class="comment-input" placeholder="Add a comment...">
+                    <button class="post-button">Post</button>
+                </div>
+            </article>
         </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="profile-info">
+                    <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="shauna_art" class="profile-avatar">
+                    <div class="profile-details">
+                        <h3>shauna_art</h3>
+                        <p>Shauna McNally</p>
+                    </div>
+                    <button class="switch-button">Switch</button>
+                </div>
+            </div>
+
+            <div class="suggestions">
+                <div class="suggestions-header">
+                    <span class="suggestions-title">Suggestions For You</span>
+                    <button class="see-all">See All</button>
+                </div>
+                
+                <div class="suggestion-item">
+                    <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="art_lover" class="suggestion-avatar">
+                    <div class="suggestion-info">
+                        <div class="suggestion-username">art_lover</div>
+                        <div class="suggestion-followers">Followed by shauna_art</div>
+                    </div>
+                    <button class="follow-button">Follow</button>
+                </div>
+                
+                <div class="suggestion-item">
+                    <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="fantasy_artist" class="suggestion-avatar">
+                    <div class="suggestion-info">
+                        <div class="suggestion-username">fantasy_artist</div>
+                        <div class="suggestion-followers">New to Instagram</div>
+                    </div>
+                    <button class="follow-button">Follow</button>
+                </div>
+                
+                <div class="suggestion-item">
+                    <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="print_collector" class="suggestion-avatar">
+                    <div class="suggestion-info">
+                        <div class="suggestion-username">print_collector</div>
+                        <div class="suggestion-followers">Followed by art_lover</div>
+                    </div>
+                    <button class="follow-button">Follow</button>
+                </div>
+            </div>
+        </aside>
     </main>
 
-    <!-- Modal for product details -->
-    <div class="modal" id="productModal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="modal-body">
-                <div class="product-image">
-                    <img id="modalImage" src="" alt="">
-                </div>
-                <div class="product-details">
-                    <h2 id="modalTitle"></h2>
-                    <p id="modalDescription"></p>
-                    <div class="price-info">
-                        <span class="price" id="modalPrice"></span>
-                    </div>
-                    <div class="size-selector">
-                        <label for="sizeSelect">Size:</label>
-                        <select id="sizeSelect">
-                            <!-- Sizes will be populated -->
-                        </select>
-                    </div>
-                    <button class="buy-btn" id="buyButton">Purchase Print</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script>
+        // Like functionality
+        const likeBtn = document.getElementById('like-btn');
+        const likesCount = document.getElementById('likes-count');
+        let isLiked = false;
+        let currentLikes = 1234;
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p>Email: <a href="mailto:shauna@shaunamcnally.com">shauna@shaunamcnally.com</a></p>
-                    <p>Instagram: <a href="https://instagram.com/shaunamcnally" target="_blank">@shaunamcnally</a></p>
-                </div>
-                <div class="footer-section">
-                    <h3>About</h3>
-                    <p>Original artwork and high-quality prints by Shauna McNally. Each piece is carefully crafted and printed on archival paper.</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Shauna McNally. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+        likeBtn.addEventListener('click', function() {
+            if (isLiked) {
+                // Unlike
+                likeBtn.classList.remove('fas', 'liked');
+                likeBtn.classList.add('far');
+                currentLikes--;
+                isLiked = false;
+            } else {
+                // Like
+                likeBtn.classList.remove('far');
+                likeBtn.classList.add('fas', 'liked');
+                currentLikes++;
+                isLiked = true;
+                likeBtn.classList.add('heart-beat');
+                setTimeout(() => {
+                    likeBtn.classList.remove('heart-beat');
+                }, 300);
+            }
+            
+            likesCount.textContent = currentLikes.toLocaleString() + ' likes';
+        });
 
-    <script src="script.js"></script>
+        // Comment functionality
+        const commentInput = document.querySelector('.comment-input');
+        const postButton = document.querySelector('.post-button');
+
+        postButton.addEventListener('click', function() {
+            const comment = commentInput.value.trim();
+            if (comment) {
+                // In a real app, this would add the comment to the post
+                console.log('New comment:', comment);
+                commentInput.value = '';
+            }
+        });
+
+        commentInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                postButton.click();
+            }
+        });
+
+        // Double tap to like
+        const postImage = document.querySelector('.post-image');
+        postImage.addEventListener('dblclick', function() {
+            if (!isLiked) {
+                likeBtn.click();
+            }
+        });
+    </script>
 </body>
 </html>

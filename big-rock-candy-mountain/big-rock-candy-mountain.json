@@ -1,0 +1,12 @@
+{
+    "id": "big-rock-candy-mountain",
+    "title": "Big Rock Candy Mountain",
+    "description": "A sweet and whimsical landscape inspired by classic folk tales.",
+    "image": "img/Big Rock Candy Mountain.jpeg",
+    "category": ["fantasy", "print", "collage"],
+    "available": true,
+    "sizes": ["A4"],
+    "paymentLinks": {
+      "A4": "https://buy.stripe.com/4gMbJ29Ok85C8eo2sg9sk00"
+    }
+  }
