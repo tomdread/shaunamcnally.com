@@ -428,6 +428,12 @@
                     </div>
                     <span class="story-name">shauna_art</span>
                 </div>
+                <div class="story">
+                    <div class="story-avatar">
+                        <img src="oh-dorothy/oh-dorothy.jpg" alt="oh_dorothy">
+                    </div>
+                    <span class="story-name">oh_dorothy</span>
+                </div>
             </div>
 
             <!-- Post -->
@@ -459,6 +465,42 @@
                 </div>
                 
                 <div class="post-time">2 hours ago</div>
+                
+                <div class="add-comment">
+                    <input type="text" class="comment-input" placeholder="Add a comment...">
+                    <button class="post-button">Post</button>
+                </div>
+            </article>
+
+            <!-- Oh Dorothy Post -->
+            <article class="post">
+                <div class="post-header">
+                    <img src="oh-dorothy/oh-dorothy.jpg" alt="shauna_art" class="post-avatar">
+                    <span class="post-user">shauna_art</span>
+                    <i class="fas fa-ellipsis-h post-more"></i>
+                </div>
+                
+                <img src="oh-dorothy/oh-dorothy.jpg" alt="Oh Dorothy" class="post-image">
+                
+                <div class="post-actions">
+                    <i class="far fa-heart action-icon" id="like-btn-2"></i>
+                    <i class="far fa-comment action-icon"></i>
+                    <i class="far fa-paper-plane action-icon"></i>
+                    <i class="far fa-bookmark action-icon" style="margin-left: auto;"></i>
+                </div>
+                
+                <div class="post-likes" id="likes-count-2">892 likes</div>
+                
+                <div class="post-caption">
+                    <span class="username">Oh Dorothy</span>
+                    A whimsical tribute to Dorothy from The Wizard of Oz. This enchanting piece captures the magic and wonder of the beloved classic story. 🌈✨ #OhDorothy #WizardOfOz #FantasyArt #Whimsical #ArtPrint
+                </div>
+                
+                <div class="post-comments">
+                    View all 23 comments
+                </div>
+                
+                <div class="post-time">5 hours ago</div>
                 
                 <div class="add-comment">
                     <input type="text" class="comment-input" placeholder="Add a comment...">
@@ -517,7 +559,7 @@
     </main>
 
     <script>
-        // Like functionality
+        // Like functionality for first post
         const likeBtn = document.getElementById('like-btn');
         const likesCount = document.getElementById('likes-count');
         let isLiked = false;
@@ -545,6 +587,34 @@
             likesCount.textContent = currentLikes.toLocaleString() + ' likes';
         });
 
+        // Like functionality for second post (Oh Dorothy)
+        const likeBtn2 = document.getElementById('like-btn-2');
+        const likesCount2 = document.getElementById('likes-count-2');
+        let isLiked2 = false;
+        let currentLikes2 = 892;
+
+        likeBtn2.addEventListener('click', function() {
+            if (isLiked2) {
+                // Unlike
+                likeBtn2.classList.remove('fas', 'liked');
+                likeBtn2.classList.add('far');
+                currentLikes2--;
+                isLiked2 = false;
+            } else {
+                // Like
+                likeBtn2.classList.remove('far');
+                likeBtn2.classList.add('fas', 'liked');
+                currentLikes2++;
+                isLiked2 = true;
+                likeBtn2.classList.add('heart-beat');
+                setTimeout(() => {
+                    likeBtn2.classList.remove('heart-beat');
+                }, 300);
+            }
+            
+            likesCount2.textContent = currentLikes2.toLocaleString() + ' likes';
+        });
+
         // Comment functionality
         const commentInput = document.querySelector('.comment-input');
         const postButton = document.querySelector('.post-button');
@@ -565,11 +635,15 @@
         });
 
         // Double tap to like
-        const postImage = document.querySelector('.post-image');
-        postImage.addEventListener('dblclick', function() {
-            if (!isLiked) {
-                likeBtn.click();
-            }
+        const postImages = document.querySelectorAll('.post-image');
+        postImages.forEach((postImage, index) => {
+            postImage.addEventListener('dblclick', function() {
+                if (index === 0 && !isLiked) {
+                    likeBtn.click();
+                } else if (index === 1 && !isLiked2) {
+                    likeBtn2.click();
+                }
+            });
         });
     </script>
 </body>
