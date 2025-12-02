@@ -22,7 +22,7 @@ const PRODUCT_TO_PRICE = {
   'prod_THigAUxOVR7lIH': 'price_1SL9F2JzbynpJBQqit6MxmXe', // If Only I Was a Giant Dinosaur
   'prod_THieNC4E5rjJ2I': 'price_1SL9DJJzbynpJBQqDRvk32na', // Club Mc Meowly's
   'prod_THhx0dGKpMBzjA': 'price_1SL8XwJzbynpJBQqZ8nX6WcD', // Mc Meowly's Lounge
-  'prod_THhw4MKoZ3jkk9': 'price_1SZvQiJzbynpJBQqc6fCn44y', // Oh Dorothy (€1 test price)
+  'prod_THhw4MKoZ3jkk9': 'price_1SL8WIJzbynpJBQqIPkc9oYm', // Oh Dorothy
   'prod_THDi4qLDA9Ty2E': 'price_1SKfH6JzbynpJBQq34qDcpcy', // Big Rock Candy Mountain A4
 };
 
