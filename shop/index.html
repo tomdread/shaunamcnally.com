@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Shopping Cart - Shauna McNally">
-    <title>Cart | Shauna McNally</title>
+    <meta name="description" content="Shop - Artwork by Shauna McNally">
+    <title>Shop | Shauna McNally</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body class="cart-page">
@@ -22,58 +22,7 @@
 
         <main>
             <article class="artwork-page">
-                <h1>Cart</h1>
-
-                <section id="cart-items-section" class="cart-section">
-                    <div id="cart-items-container">
-                        <!-- Cart items will be dynamically inserted here -->
-                    </div>
-                    <div id="cart-total" class="cart-total">
-                        <p><strong>Total: <span id="total-price">€0.00</span></strong></p>
-                    </div>
-                    <div class="purchase-buttons">
-                        <button 
-                            type="button" 
-                            class="btn btn-primary" 
-                            id="checkout-btn"
-                            onclick="proceedToCheckout()"
-                            aria-label="Proceed to checkout"
-                        >
-                            Proceed to Checkout
-                        </button>
-                        <button 
-                            type="button" 
-                            class="btn btn-secondary" 
-                            id="clear-cart-btn"
-                            onclick="clearCart()"
-                            aria-label="Clear all items from cart"
-                        >
-                            Clear Cart
-                        </button>
-                        <button 
-                            type="button" 
-                            class="btn btn-secondary" 
-                            onclick="window.location.href='/index.html'"
-                            aria-label="Continue shopping"
-                        >
-                            Continue Shopping
-                        </button>
-                    </div>
-                </section>
-
-                <section id="empty-cart-message" class="cart-section" style="display: none; text-align: center;">
-                    <p>Your cart is empty.</p>
-                    <div class="purchase-buttons">
-                        <button 
-                            type="button" 
-                            class="btn btn-primary" 
-                            onclick="window.location.href='/index.html'"
-                            aria-label="Continue shopping"
-                        >
-                            Continue Shopping
-                        </button>
-                    </div>
-                </section>
+                <h1>Shop</h1>
 
                 <section class="artwork-list">
                     <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">Available Prints</h2>
@@ -409,140 +358,6 @@
     </div>
 
     <script src="/script.js"></script>
-    <script>
-        // Cart display functions
-        function displayCart() {
-            const cart = getCart();
-            const cartItemsContainer = document.getElementById('cart-items-container');
-            const cartTotal = document.getElementById('total-price');
-            const cartSection = document.getElementById('cart-items-section');
-            const emptyCartMessage = document.getElementById('empty-cart-message');
-            
-            if (!cart || cart.length === 0) {
-                cartSection.style.display = 'none';
-                emptyCartMessage.style.display = 'block';
-                return;
-            }
-            
-            cartSection.style.display = 'block';
-            emptyCartMessage.style.display = 'none';
-            
-            cartItemsContainer.innerHTML = '';
-            let total = 0;
-            
-            cart.forEach((item, index) => {
-                const itemElement = document.createElement('div');
-                itemElement.className = 'cart-item';
-                
-                const itemInfo = document.createElement('div');
-                itemInfo.className = 'cart-item-info';
-                itemInfo.innerHTML = `
-                    <p><strong>${item.name || 'Print'}</strong></p>
-                    <p>€${item.price || '30.00'}</p>
-                `;
-                
-                const itemActions = document.createElement('div');
-                itemActions.className = 'cart-item-actions';
-                
-                const removeBtn = document.createElement('button');
-                removeBtn.type = 'button';
-                removeBtn.className = 'btn btn-secondary';
-                removeBtn.textContent = 'Remove';
-                removeBtn.onclick = () => removeFromCart(index);
-                
-                itemActions.appendChild(removeBtn);
-                itemElement.appendChild(itemInfo);
-                itemElement.appendChild(itemActions);
-                cartItemsContainer.appendChild(itemElement);
-                
-                total += parseFloat(item.price || 30.00);
-            });
-            
-            cartTotal.textContent = `€${total.toFixed(2)}`;
-        }
-        
-        function removeFromCart(index) {
-            const cart = getCart();
-            cart.splice(index, 1);
-            saveCart(cart);
-            displayCart();
-        }
-        
-        function clearCart() {
-            if (confirm('Are you sure you want to clear all items from your cart?')) {
-                localStorage.removeItem('cart');
-                displayCart();
-            }
-        }
-        
-        async function proceedToCheckout() {
-            const cart = getCart();
-            if (!cart || cart.length === 0) {
-                alert('Your cart is empty.');
-                return;
-            }
-            
-            // Disable the checkout button to prevent multiple clicks
-            const checkoutBtn = document.getElementById('checkout-btn');
-            if (checkoutBtn) {
-                checkoutBtn.disabled = true;
-                checkoutBtn.textContent = 'Processing...';
-            }
-            
-            try {
-                // Get the worker URL - update this with your actual Cloudflare Worker URL
-                // For example: https://shauna-mcnally-checkout.your-subdomain.workers.dev
-                const workerUrl = '/api/checkout'; // This will be your worker route
-                
-                // If you're using a custom domain, use that instead
-                // const workerUrl = 'https://api.shauna-mcnally.com/checkout';
-                
-                const response = await fetch(workerUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        cart: cart,
-                        successUrl: window.location.origin + '/cart/index.html?success=true',
-                        cancelUrl: window.location.origin + '/cart/index.html?canceled=true',
-                    }),
-                });
-                
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error || 'Failed to create checkout session');
-                }
-                
-                const data = await response.json();
-                
-                // Redirect to Stripe Checkout
-                if (data.url) {
-                    window.location.href = data.url;
-                } else {
-                    throw new Error('No checkout URL received');
-                }
-            } catch (error) {
-                console.error('Checkout error:', error);
-                alert('An error occurred while processing your checkout. Please try again.');
-                
-                // Re-enable the button
-                if (checkoutBtn) {
-                    checkoutBtn.disabled = false;
-                    checkoutBtn.textContent = 'Proceed to Checkout';
-                }
-            }
-        }
-        
-        // Hook into addItemToCart to refresh cart display when items are added
-        const originalAddToCart = window.addItemToCart;
-        window.addItemToCart = function(productId) {
-            originalAddToCart(productId);
-            displayCart();
-        };
-        
-        // Display cart on page load
-        document.addEventListener('DOMContentLoaded', displayCart);
-    </script>
 </body>
 </html>
+
