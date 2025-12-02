@@ -1,0 +1,11 @@
+name = "shauna-mcnally-checkout"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+# Add your Stripe secret key as a secret in Cloudflare:
+# wrangler secret put STRIPE_SECRET_KEY
+# Or set it in the Cloudflare dashboard under Workers > Settings > Variables
+

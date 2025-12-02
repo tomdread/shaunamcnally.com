@@ -3,648 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShaunaMcNally.com - Art Gallery</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #fafafa;
-            color: #262626;
-        }
-
-        /* Header */
-        .header {
-            background: white;
-            border-bottom: 1px solid #dbdbdb;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            height: 60px;
-        }
-
-        .header-content {
-            max-width: 975px;
-            margin: 0 auto;
-            padding: 0 20px;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #262626;
-            text-decoration: none;
-        }
-
-        .search-bar {
-            background: #efefef;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 16px;
-            width: 268px;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .search-bar::placeholder {
-            color: #8e8e8e;
-        }
-
-        .nav-icons {
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-icon {
-            font-size: 24px;
-            color: #262626;
-            text-decoration: none;
-        }
-
-        /* Main Content */
-        .main-content {
-            max-width: 975px;
-            margin: 80px auto 0;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 1fr 293px;
-            gap: 30px;
-        }
-
-        /* Stories */
-        .stories {
-            background: white;
-            border: 1px solid #dbdbdb;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 24px;
-            display: flex;
-            gap: 16px;
-            overflow-x: auto;
-        }
-
-        .story {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 66px;
-        }
-
-        .story-avatar {
-            width: 66px;
-            height: 66px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            padding: 2px;
-            margin-bottom: 8px;
-        }
-
-        .story-avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .story-name {
-            font-size: 12px;
-            color: #262626;
-            text-align: center;
-        }
-
-        /* Post */
-        .post {
-            background: white;
-            border: 1px solid #dbdbdb;
-            border-radius: 8px;
-            margin-bottom: 24px;
-        }
-
-        .post-header {
-            padding: 14px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .post-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .post-user {
-            font-weight: 600;
-            font-size: 14px;
-            color: #262626;
-        }
-
-        .post-more {
-            margin-left: auto;
-            font-size: 16px;
-            color: #262626;
-        }
-
-        .post-image {
-            width: 100%;
-            max-height: 600px;
-            object-fit: cover;
-        }
-
-        .post-actions {
-            padding: 8px 16px;
-            display: flex;
-            gap: 16px;
-        }
-
-        .action-icon {
-            font-size: 24px;
-            color: #262626;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .action-icon:hover {
-            color: #8e8e8e;
-        }
-
-        .action-icon.liked {
-            color: #ed4956;
-        }
-
-        .post-likes {
-            padding: 0 16px;
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-
-        .post-caption {
-            padding: 0 16px;
-            font-size: 14px;
-            line-height: 1.4;
-            margin-bottom: 8px;
-        }
-
-        .post-caption .username {
-            font-weight: 600;
-            margin-right: 8px;
-        }
-
-        .post-comments {
-            padding: 0 16px;
-            font-size: 14px;
-            color: #8e8e8e;
-            margin-bottom: 8px;
-        }
-
-        .post-time {
-            padding: 0 16px 16px;
-            font-size: 10px;
-            color: #8e8e8e;
-            text-transform: uppercase;
-        }
-
-        .add-comment {
-            padding: 16px;
-            border-top: 1px solid #efefef;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .comment-input {
-            flex: 1;
-            border: none;
-            outline: none;
-            font-size: 14px;
-            background: transparent;
-        }
-
-        .comment-input::placeholder {
-            color: #8e8e8e;
-        }
-
-        .post-button {
-            background: none;
-            border: none;
-            color: #0095f6;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            position: sticky;
-            top: 80px;
-        }
-
-        .profile-card {
-            background: white;
-            border: 1px solid #dbdbdb;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 24px;
-        }
-
-        .profile-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .profile-avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .profile-details h3 {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .profile-details p {
-            font-size: 14px;
-            color: #8e8e8e;
-        }
-
-        .switch-button {
-            margin-left: auto;
-            background: none;
-            border: none;
-            color: #0095f6;
-            font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .suggestions {
-            background: white;
-            border: 1px solid #dbdbdb;
-            border-radius: 8px;
-            padding: 20px;
-        }
-
-        .suggestions-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .suggestions-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #8e8e8e;
-        }
-
-        .see-all {
-            background: none;
-            border: none;
-            color: #262626;
-            font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .suggestion-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .suggestion-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .suggestion-info {
-            flex: 1;
-        }
-
-        .suggestion-username {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .suggestion-followers {
-            font-size: 12px;
-            color: #8e8e8e;
-        }
-
-        .follow-button {
-            background: none;
-            border: none;
-            color: #0095f6;
-            font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-                padding: 0 10px;
-            }
-
-            .sidebar {
-                display: none;
-            }
-
-            .search-bar {
-                display: none;
-            }
-
-            .header-content {
-                padding: 0 10px;
-            }
-        }
-
-        /* Animations */
-        @keyframes heartBeat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        .heart-beat {
-            animation: heartBeat 0.3s ease-in-out;
-        }
-    </style>
+    <meta name="description" content="Shauna McNally - Artist and Creator">
+    <title>Shauna McNally</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <a href="#" class="logo">ShaunaMcNally.com</a>
-            <input type="text" class="search-bar" placeholder="Search">
-            <div class="nav-icons">
-                <a href="#" class="nav-icon"><i class="fas fa-home"></i></a>
-                <a href="#" class="nav-icon"><i class="fas fa-paper-plane"></i></a>
-                <a href="#" class="nav-icon"><i class="fas fa-plus-square"></i></a>
-                <a href="#" class="nav-icon"><i class="fas fa-compass"></i></a>
-                <a href="#" class="nav-icon"><i class="fas fa-heart"></i></a>
-                <a href="#" class="nav-icon"><i class="fas fa-user"></i></a>
-            </div>
-        </div>
-    </header>
+    <div class="container">
+        <header>
+            <nav class="menu" role="navigation" aria-label="Main navigation">
+                <a href="/index.html" class="logo">ShaunaMcNally.Com</a>
+                <div class="menu-links">
+                    <a href="/about/index.html" class="site-link">About</a>
+                    <a href="/cart/index.html" class="site-link">Cart</a>
+                </div>
+            </nav>
+        </header>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="feed">
-            <!-- Stories -->
-            <div class="stories">
-                <div class="story">
-                    <div class="story-avatar">
-                        <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="Your Story">
-                    </div>
-                    <span class="story-name">Your Story</span>
-                </div>
-                <div class="story">
-                    <div class="story-avatar">
-                        <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="shauna_art">
-                    </div>
-                    <span class="story-name">shauna_art</span>
-                </div>
-                <div class="story">
-                    <div class="story-avatar">
-                        <img src="oh-dorothy/oh-dorothy.jpg" alt="oh_dorothy">
-                    </div>
-                    <span class="story-name">oh_dorothy</span>
-                </div>
-            </div>
+        <main>
+            <article class="artwork-page">
+                <h1>Artwork</h1>
 
-            <!-- Post -->
-            <article class="post">
-                <div class="post-header">
-                    <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="shauna_art" class="post-avatar">
-                    <span class="post-user">shauna_art</span>
-                    <i class="fas fa-ellipsis-h post-more"></i>
-                </div>
-                
-                <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="Big Rock Candy Mountain" class="post-image">
-                
-                <div class="post-actions">
-                    <i class="far fa-heart action-icon" id="like-btn"></i>
-                    <i class="far fa-comment action-icon"></i>
-                    <i class="far fa-paper-plane action-icon"></i>
-                    <i class="far fa-bookmark action-icon" style="margin-left: auto;"></i>
-                </div>
-                
-                <div class="post-likes" id="likes-count">1,234 likes</div>
-                
-                <div class="post-caption">
-                    <span class="username">shauna_art</span>
-                    A sweet and whimsical landscape inspired by classic folk tales. This enchanting piece captures the magic of childhood dreams and the allure of distant, fantastical places. 🍭✨ #BigRockCandyMountain #FantasyArt #Whimsical #ArtPrint
-                </div>
-                
-                <div class="post-comments">
-                    View all 42 comments
-                </div>
-                
-                <div class="post-time">2 hours ago</div>
-                
-                <div class="add-comment">
-                    <input type="text" class="comment-input" placeholder="Add a comment...">
-                    <button class="post-button">Post</button>
-                </div>
+                <section class="artwork-list">
+                    <ul class="artwork-items">
+                        <li class="artwork-item">
+                            <a href="/time-for-everything/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://d1wqzb5bdbcre6.cloudfront.net/ec244aee9ea0da1205a7faf441d9e85f78c8dff6629c34e2452537bc3b065c15/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d56664f465634593356435544637762304e6e4e4568444e33646d4e585a3163465253303030563669797a7945/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="Time For Everything artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Time For Everything</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/the-entity/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/c0e08c82553a3aea410d7406929f2e2b7fcd8562aae6918364427752b442e871/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d56664e544a6c64304670547a4e5961464a6d546b4a426233467955545935633239773030566c704a316d566a/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="The Entity artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">The Entity</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/the-beginning-of-the-end/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/d6065ae77ebaccd4044e225a7f3258da87308bbd179ee41733511fdb98ab4aab/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d56665a446c4953314271626a4a73636b5a6e623346755648524957474a75576b4a763030546a554763336f44/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="The Beginning of the End artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">The Beginning of the End</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/sunrise/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="/sunrise/sunrise-01.jpeg" 
+                                        alt="Sunrise artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Sunrise</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/stop-act-natural/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/d068d7ed0eee9302b115fc759dde678dea8fba971c20fbcf22637ca151a0f578/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d5666527a6c7a545467774f465630516a5a6a4e556f35636a464859316853536a647630303332526f36385835/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="Stop Act Natural artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Stop Act Natural</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/reflections-of-another-time/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/f3a31a279a5bbf563ac0a0a37489f8fa51decae077d6f7ebf1a2360b82033207/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d5666516b3434626b566851316f305432704e55456732656e4a344d6b74776132353630306b5648556b556975/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="Reflections Of Another Time artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Reflections Of Another Time</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/pearse-station/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/cef5638203c9ebecb490592cde153e6404e067ae8eb9344c383cbbcfe82fb5dc/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d56664f575249576b6831636e68584d475930575552726256425a546a42544d454d7830306d6f6e6d534e3255/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="Pearse Station artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Pearse Station</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/past-the-fairy-tree/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/c116082e15d4a9d3164aef3e240ecf731fd3baf7745296086778abe603cde95d/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d56664e54644765486b3362465a70546b7850625549345a6d5646635442516155307830304e4c56335a6a346a/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="Past The Fairy Tree artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Past The Fairy Tree</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/infinite-possibilities/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/5ad658cc92e5bbf4a1a93ade134d59e416769bd4fa879a69a20ea8b143859a12/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d56665a46465853584a544e6d707054314e7a526e68565956643053335a52516d52303030506563304c787368/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="Infinite Possibilities artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Infinite Possibilities</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/dream-junction/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/55f160ec6a98090c58356073b50af5c9e0309ef09821b9a7f1c69d03a18c750b/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d566661304e4363305a534f4568515a6a64764d3078786347737a64305977646e6b333030364944596d6a4579/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="Dream Junction artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Dream Junction</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/away-with-the-faries/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/811ea891869e97e6e9476e8187f4f7ec9bba380f4993d89d17f755482f6ce512/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d5666566c7042644864475a326732615664616258564956474a496355646f5246564d3030794565536f796954/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="Away with the Faries artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Away with the Faries</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/a-place-to-escape-to/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/f7e894934b271a15fd8ca9c2265d857780d33b544a837f03c7b997df077f3d8f/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d566663586c754d486c3163453142526b747a51545a4c56456468656c52325245566130304f57377056446873/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="A Place To Escape To artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">A Place To Escape To</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/big-rock-candy-mountain/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/72258350daf0488ab3e546266a3e7b8605f7d88eaf559a3708afec4b1a466329/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d56666156565864566c506245706a51315658553039304e7a4a4b4d4846594e454d7830306156637649796d30/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="Big Rock Candy Mountain artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Big Rock Candy Mountain</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/garden-of-kevinity/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/2a676cb95577f98937186f71e3bfebc7dd1a5746d84e74024a09b07d3997d1bc/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d5666616d6c715a586c4d616d6c51627a4273596d78744e30524f5755564d516d677930304b7770676b6e6341/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="Garden of Kevinity artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Garden of Kevinity</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/if-only-i-was-a-giant-dinosaur/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/999fe9028e8236897e48d296119e7dc44eec43e3aee66d6d4a80717d1e4910b0/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d566651315634544864786547646f646d3176576d493357444a4b56303146644652763030626c54756a45504e/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="If Only I Was a Giant Dinosaur artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">If Only I Was a Giant Dinosaur</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/club-mc-meowlys/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/316762a2f8b15917972d63693cb6a85b70d1dc3d1d941236adecc014cd10bf05/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d5666624738774d46565a4d48637755574e4d6255524a52456c7852316779565574793030754c7636356d5441/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="Club Mc Meowly's artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Club Mc Meowly's</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/mc-meowlys-lounge/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/46282024fb1ae1b6e626c2f429f4bb222e94401da76cfea979082ba7222f681f/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d56666145747054546c57596b396f62307846556d565252464a335a58517855555a423030424f654264396239/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="Mc Meowly's Lounge artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Mc Meowly's Lounge</span>
+                            </a>
+                        </li>
+                        <li class="artwork-item">
+                            <a href="/oh-dorothy/index.html" class="artwork-link">
+                                <div class="artwork-tile-image">
+                                    <img 
+                                        src="https://stripe-camo.global.ssl.fastly.net/12a9931459389b048611df02c4c5234804a8ccbc45ec9abfb1fa1a512daad766/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785530746c547a684b656d4a35626e424b516c467866475a7358327870646d5666596b5252634735314d555231626c42526344426b597a645054474e7a5444493130307939495739786872/6d65726368616e745f69643d616363745f31534b654f384a7a62796e704a42517126636c69656e743d50524f445543545f415049" 
+                                        alt="Oh Dorothy artwork by Shauna McNally"
+                                        loading="lazy"
+                                    >
+                                </div>
+                                <span class="artwork-title">Oh Dorothy</span>
+                            </a>
+                        </li>
+                    </ul>
+                </section>
             </article>
+        </main>
+    </div>
 
-            <!-- Oh Dorothy Post -->
-            <article class="post">
-                <div class="post-header">
-                    <img src="oh-dorothy/oh-dorothy.jpg" alt="shauna_art" class="post-avatar">
-                    <span class="post-user">shauna_art</span>
-                    <i class="fas fa-ellipsis-h post-more"></i>
-                </div>
-                
-                <img src="oh-dorothy/oh-dorothy.jpg" alt="Oh Dorothy" class="post-image">
-                
-                <div class="post-actions">
-                    <i class="far fa-heart action-icon" id="like-btn-2"></i>
-                    <i class="far fa-comment action-icon"></i>
-                    <i class="far fa-paper-plane action-icon"></i>
-                    <i class="far fa-bookmark action-icon" style="margin-left: auto;"></i>
-                </div>
-                
-                <div class="post-likes" id="likes-count-2">892 likes</div>
-                
-                <div class="post-caption">
-                    <span class="username">Oh Dorothy</span>
-                    A whimsical tribute to Dorothy from The Wizard of Oz. This enchanting piece captures the magic and wonder of the beloved classic story. 🌈✨ #OhDorothy #WizardOfOz #FantasyArt #Whimsical #ArtPrint
-                </div>
-                
-                <div class="post-comments">
-                    View all 23 comments
-                </div>
-                
-                <div class="post-time">5 hours ago</div>
-                
-                <div class="add-comment">
-                    <input type="text" class="comment-input" placeholder="Add a comment...">
-                    <button class="post-button">Post</button>
-                </div>
-            </article>
-        </div>
-
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="profile-card">
-                <div class="profile-info">
-                    <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="shauna_art" class="profile-avatar">
-                    <div class="profile-details">
-                        <h3>shauna_art</h3>
-                        <p>Shauna McNally</p>
-                    </div>
-                    <button class="switch-button">Switch</button>
-                </div>
-            </div>
-
-            <div class="suggestions">
-                <div class="suggestions-header">
-                    <span class="suggestions-title">Suggestions For You</span>
-                    <button class="see-all">See All</button>
-                </div>
-                
-                <div class="suggestion-item">
-                    <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="art_lover" class="suggestion-avatar">
-                    <div class="suggestion-info">
-                        <div class="suggestion-username">art_lover</div>
-                        <div class="suggestion-followers">Followed by shauna_art</div>
-                    </div>
-                    <button class="follow-button">Follow</button>
-                </div>
-                
-                <div class="suggestion-item">
-                    <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="fantasy_artist" class="suggestion-avatar">
-                    <div class="suggestion-info">
-                        <div class="suggestion-username">fantasy_artist</div>
-                        <div class="suggestion-followers">New to Instagram</div>
-                    </div>
-                    <button class="follow-button">Follow</button>
-                </div>
-                
-                <div class="suggestion-item">
-                    <img src="big-rock-candy-mountain/big-rock-candy-mountain.jpg" alt="print_collector" class="suggestion-avatar">
-                    <div class="suggestion-info">
-                        <div class="suggestion-username">print_collector</div>
-                        <div class="suggestion-followers">Followed by art_lover</div>
-                    </div>
-                    <button class="follow-button">Follow</button>
-                </div>
-            </div>
-        </aside>
-    </main>
-
-    <script>
-        // Like functionality for first post
-        const likeBtn = document.getElementById('like-btn');
-        const likesCount = document.getElementById('likes-count');
-        let isLiked = false;
-        let currentLikes = 1234;
-
-        likeBtn.addEventListener('click', function() {
-            if (isLiked) {
-                // Unlike
-                likeBtn.classList.remove('fas', 'liked');
-                likeBtn.classList.add('far');
-                currentLikes--;
-                isLiked = false;
-            } else {
-                // Like
-                likeBtn.classList.remove('far');
-                likeBtn.classList.add('fas', 'liked');
-                currentLikes++;
-                isLiked = true;
-                likeBtn.classList.add('heart-beat');
-                setTimeout(() => {
-                    likeBtn.classList.remove('heart-beat');
-                }, 300);
-            }
-            
-            likesCount.textContent = currentLikes.toLocaleString() + ' likes';
-        });
-
-        // Like functionality for second post (Oh Dorothy)
-        const likeBtn2 = document.getElementById('like-btn-2');
-        const likesCount2 = document.getElementById('likes-count-2');
-        let isLiked2 = false;
-        let currentLikes2 = 892;
-
-        likeBtn2.addEventListener('click', function() {
-            if (isLiked2) {
-                // Unlike
-                likeBtn2.classList.remove('fas', 'liked');
-                likeBtn2.classList.add('far');
-                currentLikes2--;
-                isLiked2 = false;
-            } else {
-                // Like
-                likeBtn2.classList.remove('far');
-                likeBtn2.classList.add('fas', 'liked');
-                currentLikes2++;
-                isLiked2 = true;
-                likeBtn2.classList.add('heart-beat');
-                setTimeout(() => {
-                    likeBtn2.classList.remove('heart-beat');
-                }, 300);
-            }
-            
-            likesCount2.textContent = currentLikes2.toLocaleString() + ' likes';
-        });
-
-        // Comment functionality
-        const commentInput = document.querySelector('.comment-input');
-        const postButton = document.querySelector('.post-button');
-
-        postButton.addEventListener('click', function() {
-            const comment = commentInput.value.trim();
-            if (comment) {
-                // In a real app, this would add the comment to the post
-                console.log('New comment:', comment);
-                commentInput.value = '';
-            }
-        });
-
-        commentInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                postButton.click();
-            }
-        });
-
-        // Double tap to like
-        const postImages = document.querySelectorAll('.post-image');
-        postImages.forEach((postImage, index) => {
-            postImage.addEventListener('dblclick', function() {
-                if (index === 0 && !isLiked) {
-                    likeBtn.click();
-                } else if (index === 1 && !isLiked2) {
-                    likeBtn2.click();
-                }
-            });
-        });
-    </script>
+    <script src="/script.js"></script>
 </body>
 </html>
+

@@ -1,0 +1,554 @@
+/* Mobile-first CSS Reset & Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fff;
+}
+
+/* Container - Mobile First */
+.container {
+    width: 100%;
+    padding: 0 1rem;
+    margin: 0 auto;
+}
+
+/* Header & Navigation - Mobile First */
+header {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.menu .logo {
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+.menu-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.site-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.site-link:hover,
+.site-link:focus {
+    text-decoration: underline;
+    outline: none;
+}
+
+/* Main Content - Mobile First */
+main {
+    width: 100%;
+}
+
+.artwork-page {
+    width: 100%;
+}
+
+.artwork-page h1 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Artwork Image - Mobile First */
+.artwork-image {
+    width: 100%;
+    margin: 0 auto 2rem;
+    text-align: center;
+}
+
+.artwork-image img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Description Section - Mobile First */
+.description {
+    width: 100%;
+    margin: 0 auto 2rem;
+    text-align: left;
+}
+
+.audio-player {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.audio-player audio {
+    width: 100%;
+    max-width: 400px;
+}
+
+.description p {
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+
+.description p:last-child {
+    margin-bottom: 0;
+}
+
+.description .separator {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 1.5rem 0 0;
+    color: #666;
+    letter-spacing: 0.5rem;
+}
+
+/* Purchase Section - Mobile First */
+.purchase-section {
+    width: 100%;
+    margin: 2rem auto;
+}
+
+.purchase-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+}
+
+.btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 2px solid #333;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.btn:hover,
+.btn:focus {
+    background-color: #333;
+    color: #fff;
+    outline: none;
+}
+
+.btn-primary {
+    background-color: #333;
+    color: #fff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #555;
+}
+
+.btn-secondary {
+    background-color: #fff;
+    color: #333;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+    background-color: #f5f5f5;
+}
+
+/* Artwork List - Mobile First */
+.artwork-list {
+    width: 100%;
+    margin: 0 auto 2rem;
+}
+
+.artwork-items {
+    list-style: none;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 0;
+}
+
+.artwork-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.artwork-link {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.artwork-link:hover,
+.artwork-link:focus {
+    color: #666;
+    outline: none;
+}
+
+.artwork-tile-image {
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+}
+
+.artwork-tile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+}
+
+.artwork-title {
+    font-size: 0.95rem;
+    font-weight: 400;
+    text-align: center;
+    line-height: 1.4;
+    padding: 0 0.25rem;
+}
+
+/* Cart page - Override grid to list layout */
+.cart-page .artwork-items {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    grid-template-columns: none !important;
+}
+
+.cart-page .artwork-item {
+    width: 100% !important;
+    border-bottom: 1px solid #e0e0e0;
+    display: block !important;
+}
+
+.cart-page .artwork-item:last-child {
+    border-bottom: none;
+}
+
+.cart-page .artwork-link {
+    display: inline !important;
+    padding: 0 !important;
+    flex-direction: row !important;
+}
+
+.cart-page .artwork-tile-image {
+    display: none !important;
+}
+
+.cart-page .artwork-title {
+    font-size: 1.125rem !important;
+    font-weight: 400 !important;
+    text-align: left !important;
+    padding: 0 !important;
+    line-height: normal !important;
+    display: inline !important;
+}
+
+.cart-page .cart-item-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    width: 100% !important;
+    padding: 1.5rem 0 !important;
+}
+
+.cart-page .cart-item-row-content {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    flex: 1 !important;
+}
+
+.cart-page .cart-item-price {
+    margin: 0 !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+}
+
+.cart-page .cart-item-button {
+    margin-left: auto !important;
+    min-width: 120px !important;
+    flex-shrink: 0 !important;
+}
+
+/* Technical Details - Mobile First */
+.technical-details {
+    width: 100%;
+    margin: 2rem auto 0;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.technical-details h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.technical-details h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.technical-details p {
+    margin-bottom: 0.5rem;
+}
+
+/* Cart Section - Mobile First */
+.cart-section {
+    width: 100%;
+    margin: 2rem auto;
+}
+
+.cart-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-info p {
+    margin-bottom: 0.5rem;
+}
+
+.cart-item-info p:last-child {
+    margin-bottom: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.cart-item-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.cart-total {
+    width: 100%;
+    margin: 1.5rem 0;
+    padding-top: 1.5rem;
+    border-top: 2px solid #333;
+    text-align: right;
+}
+
+.cart-total p {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.cart-item-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.cart-item-row-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
+}
+
+.cart-item-price {
+    margin: 0;
+    font-weight: 500;
+}
+
+.cart-item-button {
+    min-width: 120px;
+    align-self: flex-start;
+}
+
+/* Tablet Styles (768px and up) */
+@media (min-width: 768px) {
+    .container {
+        padding: 0 5%;
+        max-width: 1200px;
+    }
+
+    .menu {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .menu-links {
+        gap: 1.5rem;
+    }
+
+    .artwork-page h1 {
+        font-size: 2.25rem;
+    }
+
+    .artwork-image {
+        max-width: 80%;
+    }
+
+    .artwork-list {
+        max-width: 100%;
+    }
+
+    .artwork-items {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+
+    .artwork-title {
+        font-size: 1rem;
+    }
+
+    .description {
+        max-width: 80%;
+    }
+
+    .purchase-buttons {
+        flex-direction: row;
+        justify-content: flex-end;
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn {
+        min-width: 150px;
+    }
+
+    .technical-details {
+        max-width: 80%;
+    }
+
+    .cart-section {
+        max-width: 80%;
+    }
+
+    .cart-item {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .cart-item-actions {
+        margin-left: auto;
+    }
+
+    .cart-item-row {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .cart-item-row-content {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .cart-item-button {
+        margin-left: auto;
+    }
+}
+
+/* Desktop Styles (1024px and up) */
+@media (min-width: 1024px) {
+    .container {
+        padding: 0 10%;
+    }
+
+    .artwork-page h1 {
+        font-size: 2.5rem;
+    }
+
+    .artwork-list {
+        max-width: 100%;
+    }
+
+    .artwork-items {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+    }
+
+    .artwork-title {
+        font-size: 1.05rem;
+    }
+
+    .description {
+        max-width: 70%;
+    }
+
+    .purchase-buttons {
+        max-width: 70%;
+    }
+
+    .technical-details {
+        max-width: 70%;
+    }
+
+    .cart-section {
+        max-width: 70%;
+    }
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus styles for keyboard navigation */
+a:focus,
+button:focus {
+    outline: 2px solid #333;
+    outline-offset: 2px;
+}
+
