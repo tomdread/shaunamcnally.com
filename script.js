@@ -44,7 +44,23 @@ Object.keys(productMap).forEach(key => {
 
 // Add item to cart function
 function addItemToCart(productId, buttonElement) {
-    const product = productMap[productId] || { name: 'Print', price: '30.00', description: '' };
+    // Try to get product info from button data attributes first (from Stripe API)
+    // Get button from parameter or from global event object (available in inline onclick handlers)
+    const btn = buttonElement || (typeof event !== 'undefined' ? event.target : null);
+    
+    let product;
+    if (btn && btn.dataset.productId === productId) {
+        // Use data from button (from Stripe API)
+        product = {
+            name: btn.dataset.productName || 'Print',
+            price: btn.dataset.productPrice || '30.00',
+            description: btn.dataset.productDescription || ''
+        };
+    } else {
+        // Fall back to productMap
+        product = productMap[productId] || { name: 'Print', price: '30.00', description: '' };
+    }
+    
     const cart = getCart();
     cart.push({ 
         id: productId, 
@@ -55,8 +71,6 @@ function addItemToCart(productId, buttonElement) {
     saveCart(cart);
     
     // Show feedback on the button
-    // Get button from parameter or from global event object (available in inline onclick handlers)
-    const btn = buttonElement || (typeof event !== 'undefined' ? event.target : null);
     if (btn) {
         const originalText = btn.textContent;
         btn.textContent = 'Added!';
