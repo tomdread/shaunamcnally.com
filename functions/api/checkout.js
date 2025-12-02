@@ -116,6 +116,19 @@ export async function onRequest(context) {
     formData.append('cancel_url', defaultCancelUrl);
     formData.append('currency', 'eur');
     
+    // Collect billing address (required)
+    formData.append('billing_address_collection', 'required');
+    
+    // Collect shipping address - allow common international shipping destinations
+    // Add or remove country codes as needed (ISO 3166-1 alpha-2 codes)
+    const allowedCountries = ['IE', 'GB', 'US', 'CA', 'AU', 'NZ', 'FR', 'DE', 'IT', 'ES', 'NL', 'BE', 'AT', 'CH', 'SE', 'NO', 'DK', 'FI', 'PL', 'PT'];
+    allowedCountries.forEach(country => {
+      formData.append('shipping_address_collection[allowed_countries][]', country);
+    });
+    
+    // Collect phone number (required)
+    formData.append('phone_number_collection[enabled]', 'true');
+    
     // Add line items
     lineItems.forEach((item, index) => {
       formData.append(`line_items[${index}][price]`, item.price);
