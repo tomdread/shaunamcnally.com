@@ -46,10 +46,10 @@ export async function onRequest(context) {
 
   try {
     // Get Stripe API key from environment variable
-    const stripeSecretKey = env.STRIPE_API_KEY_CART;
+    const stripeSecretKey = env.STRIPE_API_KEY_PRODUCTS;
     if (!stripeSecretKey) {
       return new Response(
-        JSON.stringify({ error: 'Stripe API key not configured. Please set STRIPE_API_KEY_CART in Cloudflare Pages environment variables.' }),
+        JSON.stringify({ error: 'Stripe API key not configured. Please set STRIPE_API_KEY_PRODUCTS in Cloudflare Pages environment variables.' }),
         {
           status: 500,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
