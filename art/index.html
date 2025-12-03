@@ -105,13 +105,31 @@
                         addItemToCart(product.id, this);
                     };
                     
+                    // Build the product display with optional image
+                    let imageHtml = '';
+                    if (product.image) {
+                        imageHtml = `
+                            <div class="artwork-tile-image" style="width: 100px; height: 100px; margin-right: 1rem; flex-shrink: 0;">
+                                <img 
+                                    src="${escapeHtml(product.image)}" 
+                                    alt="${escapeHtml(product.name)}"
+                                    style="width: 100%; height: 100%; object-fit: contain;"
+                                    loading="lazy"
+                                >
+                            </div>
+                        `;
+                    }
+                    
                     listItem.innerHTML = `
                         <div class="cart-item-row">
-                            <div class="cart-item-row-content">
-                                <a href="${product.url}" class="artwork-link">
-                                    <span class="artwork-title">${escapeHtml(product.name)}</span>
-                                </a>
-                                <span class="cart-item-price">€${product.price}</span>
+                            <div class="cart-item-row-content" style="display: flex; align-items: center; gap: 1rem;">
+                                ${imageHtml}
+                                <div style="flex: 1;">
+                                    <a href="${product.url}" class="artwork-link">
+                                        <span class="artwork-title">${escapeHtml(product.name)}</span>
+                                    </a>
+                                    <span class="cart-item-price">€${product.price}</span>
+                                </div>
                             </div>
                         </div>
                     `;

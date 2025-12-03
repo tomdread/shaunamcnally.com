@@ -111,6 +111,12 @@ export async function onRequest(context) {
       const slug = nameToSlug(product.name);
       const url = `/${slug}/index.html`;
 
+      // Get product images - Stripe returns an array of image URLs
+      let imageUrl = null;
+      if (product.images && Array.isArray(product.images) && product.images.length > 0) {
+        imageUrl = product.images[0];
+      }
+
       return {
         id: product.id,
         name: product.name,
@@ -119,7 +125,8 @@ export async function onRequest(context) {
         priceId: priceId,
         currency: currency,
         url: url,
-        image: product.images && product.images.length > 0 ? product.images[0] : null,
+        image: imageUrl,
+        images: product.images || [], // Include all images in case we want to use them later
       };
     });
     
