@@ -57,8 +57,9 @@ export async function onRequest(context) {
       );
     }
 
-    // Fetch all active products from Stripe
-    const productsResponse = await fetch('https://api.stripe.com/v1/products?active=true&limit=100', {
+    // Fetch all active products from Stripe with default_price expanded
+    // This avoids needing separate price read permissions
+    const productsResponse = await fetch('https://api.stripe.com/v1/products?active=true&limit=100&expand[]=data.default_price', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${stripeSecretKey}`,
@@ -78,51 +79,32 @@ export async function onRequest(context) {
     }
 
     const productsData = await productsResponse.json();
-    
-    // Fetch prices for all products
-    const pricesResponse = await fetch('https://api.stripe.com/v1/prices?active=true&limit=100', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${stripeSecretKey}`,
-      },
-    });
 
-    if (!pricesResponse.ok) {
-      const errorText = await pricesResponse.text();
-      console.error('Stripe API error:', errorText);
-      return new Response(
-        JSON.stringify({ error: 'Failed to fetch prices', details: errorText }),
-        {
-          status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
-    }
-
-    const pricesData = await pricesResponse.json();
-    
-    // Create a map of product ID to prices
-    const priceMap = new Map();
-    pricesData.data.forEach(price => {
-      if (price.product && typeof price.product === 'string') {
-        if (!priceMap.has(price.product)) {
-          priceMap.set(price.product, []);
-        }
-        priceMap.get(price.product).push(price);
-      }
-    });
-
-    // Combine products with their prices
+    // Process products with their default prices
     const products = productsData.data.map(product => {
-      const prices = priceMap.get(product.id) || [];
-      // Get the default price (first active price, or first price if none active)
-      const defaultPrice = prices.find(p => p.active) || prices[0];
+      // Get the default price (expanded or as ID)
+      let defaultPrice = null;
+      if (product.default_price) {
+        // If expanded, it's an object; if not, it's just an ID
+        defaultPrice = typeof product.default_price === 'object' 
+          ? product.default_price 
+          : null;
+      }
       
       // Format price for display
       let formattedPrice = '0.00';
-      if (defaultPrice) {
+      let priceId = null;
+      let currency = 'eur';
+      
+      if (defaultPrice && defaultPrice.unit_amount) {
         const amount = defaultPrice.unit_amount / 100; // Convert from cents
         formattedPrice = amount.toFixed(2);
+        priceId = defaultPrice.id;
+        currency = defaultPrice.currency || 'eur';
+      } else if (product.default_price && typeof product.default_price === 'string') {
+        // If we only have the price ID, we can't get the amount without fetching prices
+        // In this case, we'll need to try fetching prices per product or use a fallback
+        priceId = product.default_price;
       }
 
       // Generate URL slug from product name
@@ -134,12 +116,41 @@ export async function onRequest(context) {
         name: product.name,
         description: product.description || '',
         price: formattedPrice,
-        priceId: defaultPrice?.id || null,
-        currency: defaultPrice?.currency || 'eur',
+        priceId: priceId,
+        currency: currency,
         url: url,
         image: product.images && product.images.length > 0 ? product.images[0] : null,
       };
     });
+    
+    // If we have products without prices (because default_price wasn't expanded),
+    // try to fetch prices individually for those products
+    const productsWithoutPrices = products.filter(p => p.price === '0.00' && p.priceId);
+    if (productsWithoutPrices.length > 0) {
+      // Try to fetch prices for products that need them
+      for (const product of productsWithoutPrices) {
+        try {
+          const priceResponse = await fetch(`https://api.stripe.com/v1/prices/${product.priceId}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${stripeSecretKey}`,
+            },
+          });
+          
+          if (priceResponse.ok) {
+            const priceData = await priceResponse.json();
+            if (priceData.unit_amount) {
+              const amount = priceData.unit_amount / 100;
+              product.price = amount.toFixed(2);
+              product.currency = priceData.currency || 'eur';
+            }
+          }
+        } catch (e) {
+          // If we can't fetch individual prices, that's okay - we'll show 0.00
+          console.warn(`Could not fetch price for ${product.id}:`, e);
+        }
+      }
+    }
 
     // Sort products by name
     products.sort((a, b) => a.name.localeCompare(b.name));
