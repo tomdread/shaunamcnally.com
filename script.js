@@ -54,11 +54,12 @@ function addItemToCart(productId, buttonElement) {
         product = {
             name: btn.dataset.productName || 'Print',
             price: btn.dataset.productPrice || '30.00',
-            description: btn.dataset.productDescription || ''
+            description: btn.dataset.productDescription || '',
+            image: btn.dataset.productImage || null
         };
     } else {
         // Fall back to productMap
-        product = productMap[productId] || { name: 'Print', price: '30.00', description: '' };
+        product = productMap[productId] || { name: 'Print', price: '30.00', description: '', image: null };
     }
     
     const cart = getCart();
@@ -66,7 +67,8 @@ function addItemToCart(productId, buttonElement) {
         id: productId, 
         name: product.name, 
         price: product.price,
-        description: product.description || ''
+        description: product.description || '',
+        image: product.image || null
     });
     saveCart(cart);
     
