@@ -79,31 +79,6 @@ export async function onRequest(context) {
     }
 
     const productsData = await productsResponse.json();
-    
-    // Fetch all files to get direct image URLs
-    // This allows us to convert file links to direct image URLs
-    let filesMap = new Map();
-    try {
-      const filesResponse = await fetch('https://api.stripe.com/v1/files?purpose=product_image&limit=100', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${stripeSecretKey}`,
-        },
-      });
-      
-      if (filesResponse.ok) {
-        const filesData = await filesResponse.json();
-        // Create a map of file URLs by checking if any product images match
-        filesData.data.forEach(file => {
-          if (file.url) {
-            // Store file by its URL pattern - we'll try to match file links
-            filesMap.set(file.id, file.url);
-          }
-        });
-      }
-    } catch (e) {
-      console.warn('Could not fetch files for image conversion:', e);
-    }
 
     // Process products with their default prices
     const products = productsData.data.map(product => {
@@ -136,32 +111,6 @@ export async function onRequest(context) {
       const slug = nameToSlug(product.name);
       const url = `/${slug}/index.html`;
 
-      // Get product images - Stripe returns an array of image URLs, file IDs, or file links
-      let imageUrl = null;
-      if (product.images && Array.isArray(product.images) && product.images.length > 0) {
-        const rawImageUrl = product.images[0];
-        
-        if (rawImageUrl && rawImageUrl.startsWith('file_')) {
-          // This is a file ID - get the direct URL from our files map or construct it
-          const fileUrl = filesMap.get(rawImageUrl);
-          if (fileUrl) {
-            imageUrl = fileUrl;
-          } else {
-            // Construct the direct file URL
-            // Format: https://files.stripe.com/v1/files/{file_id}/contents
-            imageUrl = `https://files.stripe.com/v1/files/${rawImageUrl}/contents`;
-          }
-        } else if (rawImageUrl && rawImageUrl.includes('files.stripe.com/links/')) {
-          // This is a file link (download link) - convert to our proxy URL
-          // Our proxy endpoint will fetch and serve the image
-          const origin = new URL(request.url).origin;
-          imageUrl = `${origin}/api/image?url=${encodeURIComponent(rawImageUrl)}`;
-        } else if (rawImageUrl && (rawImageUrl.startsWith('http://') || rawImageUrl.startsWith('https://'))) {
-          // It's already a direct image URL
-          imageUrl = rawImageUrl;
-        }
-      }
-
       return {
         id: product.id,
         name: product.name,
@@ -170,8 +119,7 @@ export async function onRequest(context) {
         priceId: priceId,
         currency: currency,
         url: url,
-        image: imageUrl,
-        images: product.images || [],
+        image: product.images && product.images.length > 0 ? product.images[0] : null,
       };
     });
     
