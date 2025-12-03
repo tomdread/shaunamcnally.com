@@ -38,6 +38,7 @@
                             id="checkout-btn"
                             onclick="proceedToCheckout()"
                             aria-label="Proceed to checkout"
+                            disabled
                         >
                             Proceed to Checkout
                         </button>
@@ -47,26 +48,13 @@
                             id="clear-cart-btn"
                             onclick="clearCart()"
                             aria-label="Clear all items from cart"
+                            disabled
                         >
                             Clear Cart
                         </button>
                         <button 
                             type="button" 
                             class="btn btn-secondary" 
-                            onclick="window.location.href='/art/index.html'"
-                            aria-label="Continue shopping"
-                        >
-                            Continue Shopping
-                        </button>
-                    </div>
-                </section>
-
-                <section id="empty-cart-message" class="cart-section" style="display: none; text-align: center;">
-                    <p>Your cart is empty.</p>
-                    <div class="purchase-buttons">
-                        <button 
-                            type="button" 
-                            class="btn btn-primary" 
                             onclick="window.location.href='/art/index.html'"
                             aria-label="Continue shopping"
                         >
@@ -85,21 +73,43 @@
             const cart = getCart();
             const cartItemsContainer = document.getElementById('cart-items-container');
             const cartTotal = document.getElementById('total-price');
-            const cartSection = document.getElementById('cart-items-section');
-            const emptyCartMessage = document.getElementById('empty-cart-message');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const clearCartBtn = document.getElementById('clear-cart-btn');
             
-            if (!cart || cart.length === 0) {
-                cartSection.style.display = 'none';
-                emptyCartMessage.style.display = 'block';
-                return;
-            }
-            
-            cartSection.style.display = 'block';
-            emptyCartMessage.style.display = 'none';
-            
+            // Clear container
             cartItemsContainer.innerHTML = '';
             let total = 0;
             
+            if (!cart || cart.length === 0) {
+                // Show empty cart message
+                const emptyMessage = document.createElement('p');
+                emptyMessage.style.textAlign = 'center';
+                emptyMessage.style.padding = '2rem';
+                emptyMessage.style.color = '#666';
+                emptyMessage.textContent = 'Your cart is empty.';
+                cartItemsContainer.appendChild(emptyMessage);
+                
+                // Disable buttons
+                if (checkoutBtn) {
+                    checkoutBtn.disabled = true;
+                }
+                if (clearCartBtn) {
+                    clearCartBtn.disabled = true;
+                }
+                
+                cartTotal.textContent = '€0.00';
+                return;
+            }
+            
+            // Enable buttons when cart has items
+            if (checkoutBtn) {
+                checkoutBtn.disabled = false;
+            }
+            if (clearCartBtn) {
+                clearCartBtn.disabled = false;
+            }
+            
+            // Display cart items
             cart.forEach((item, index) => {
                 const itemElement = document.createElement('div');
                 itemElement.className = 'cart-item';
