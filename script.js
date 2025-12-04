@@ -87,8 +87,96 @@ function addItemToCart(productId, buttonElement) {
     }
 }
 
+// Pagination - Product order from index.html
+const productOrder = [
+    'time-for-everything',
+    'the-entity',
+    'the-beginning-of-the-end',
+    'sunrise',
+    'stop-act-natural',
+    'reflections-of-another-time',
+    'pearse-station',
+    'past-the-fairy-tree',
+    'infinite-possibilities',
+    'dream-junction',
+    'away-with-the-faries',
+    'a-place-to-escape-to',
+    'big-rock-candy-mountain',
+    'garden-of-kevinity',
+    'if-only-i-was-a-giant-dinosaur',
+    'club-mc-meowlys',
+    'mc-meowlys-lounge',
+    'oh-dorothy'
+];
+
+// Get current product slug from URL
+function getCurrentProductSlug() {
+    const path = window.location.pathname;
+    const match = path.match(/\/([^\/]+)\/index\.html$/);
+    return match ? match[1] : null;
+}
+
+// Get previous and next product URLs
+function getPaginationUrls() {
+    const currentSlug = getCurrentProductSlug();
+    if (!currentSlug || !productOrder.includes(currentSlug)) {
+        return { prev: null, next: null };
+    }
+    
+    const currentIndex = productOrder.indexOf(currentSlug);
+    const prevIndex = currentIndex > 0 ? currentIndex - 1 : null;
+    const nextIndex = currentIndex < productOrder.length - 1 ? currentIndex + 1 : null;
+    
+    return {
+        prev: prevIndex !== null ? `/${productOrder[prevIndex]}/index.html` : null,
+        next: nextIndex !== null ? `/${productOrder[nextIndex]}/index.html` : null
+    };
+}
+
+// Initialize pagination on page load
+function initPagination() {
+    const pagination = document.getElementById('pagination');
+    if (!pagination) return;
+    
+    const { prev, next } = getPaginationUrls();
+    
+    const prevLink = pagination.querySelector('.pagination-prev');
+    const nextLink = pagination.querySelector('.pagination-next');
+    
+    if (prevLink) {
+        if (prev) {
+            prevLink.href = prev;
+            prevLink.classList.remove('disabled');
+        } else {
+            prevLink.href = '#';
+            prevLink.classList.add('disabled');
+            prevLink.setAttribute('aria-disabled', 'true');
+        }
+    }
+    
+    if (nextLink) {
+        if (next) {
+            nextLink.href = next;
+            nextLink.classList.remove('disabled');
+        } else {
+            nextLink.href = '#';
+            nextLink.classList.add('disabled');
+            nextLink.setAttribute('aria-disabled', 'true');
+        }
+    }
+}
+
+// Initialize pagination when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPagination);
+} else {
+    initPagination();
+}
+
 // Make functions available globally
 window.getCart = getCart;
 window.saveCart = saveCart;
 window.addItemToCart = addItemToCart;
+window.getPaginationUrls = getPaginationUrls;
+window.initPagination = initPagination;
 

@@ -318,6 +318,54 @@ main {
     flex-shrink: 0 !important;
 }
 
+/* Pagination - Mobile First */
+.pagination {
+    width: 100%;
+    margin: 2rem auto 0;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.pagination-link {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: 2px solid #333;
+    background-color: #fff;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pagination-link:hover:not(.disabled),
+.pagination-link:focus:not(.disabled) {
+    background-color: #333;
+    color: #fff;
+    outline: none;
+}
+
+.pagination-link.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.pagination-prev::before {
+    content: '← ';
+}
+
+.pagination-next::after {
+    content: ' →';
+}
+
 /* Technical Details - Mobile First */
 .technical-details {
     width: 100%;
@@ -468,6 +516,10 @@ main {
         min-width: 150px;
     }
 
+    .pagination {
+        max-width: 80%;
+    }
+
     .technical-details {
         max-width: 80%;
     }
@@ -531,6 +583,10 @@ main {
     }
 
     .purchase-buttons {
+        max-width: 70%;
+    }
+
+    .pagination {
         max-width: 70%;
     }
 
