@@ -110,26 +110,68 @@ const productOrder = [
 ];
 
 // Get current product slug from URL
+// Handles multiple URL formats:
+// - /time-for-everything/index.html
+// - /time-for-everything/
+// - /time-for-everything
 function getCurrentProductSlug() {
     const path = window.location.pathname;
-    const match = path.match(/\/([^\/]+)\/index\.html$/);
-    return match ? match[1] : null;
+    
+    // Try /product-name/index.html format first
+    let match = path.match(/\/([^\/]+)\/index\.html$/);
+    if (match) return match[1];
+    
+    // Try /product-name/ format (with trailing slash)
+    match = path.match(/\/([^\/]+)\/$/);
+    if (match && match[1] !== '' && match[1] !== 'index.html') {
+        return match[1];
+    }
+    
+    // Try /product-name format (without trailing slash)
+    match = path.match(/\/([^\/]+)$/);
+    if (match && match[1] !== '' && match[1] !== 'index.html') {
+        // Make sure it's not the root path
+        if (path !== '/') {
+            return match[1];
+        }
+    }
+    
+    return null;
 }
 
 // Get previous and next product URLs
+// Detects the current URL format and generates URLs in the same format
 function getPaginationUrls() {
     const currentSlug = getCurrentProductSlug();
     if (!currentSlug || !productOrder.includes(currentSlug)) {
         return { prev: null, next: null };
     }
     
+    // Detect current URL format
+    const path = window.location.pathname;
+    const usesIndexHtml = path.includes('/index.html');
+    const hasTrailingSlash = path.endsWith('/');
+    
+    // Determine URL format to use
+    const urlFormat = usesIndexHtml ? 'index.html' : (hasTrailingSlash ? 'trailing-slash' : 'no-slash');
+    
     const currentIndex = productOrder.indexOf(currentSlug);
     const prevIndex = currentIndex > 0 ? currentIndex - 1 : null;
     const nextIndex = currentIndex < productOrder.length - 1 ? currentIndex + 1 : null;
     
+    function formatUrl(slug) {
+        if (urlFormat === 'index.html') {
+            return `/${slug}/index.html`;
+        } else if (urlFormat === 'trailing-slash') {
+            return `/${slug}/`;
+        } else {
+            return `/${slug}`;
+        }
+    }
+    
     return {
-        prev: prevIndex !== null ? `/${productOrder[prevIndex]}/index.html` : null,
-        next: nextIndex !== null ? `/${productOrder[nextIndex]}/index.html` : null
+        prev: prevIndex !== null ? formatUrl(productOrder[prevIndex]) : null,
+        next: nextIndex !== null ? formatUrl(productOrder[nextIndex]) : null
     };
 }
 
